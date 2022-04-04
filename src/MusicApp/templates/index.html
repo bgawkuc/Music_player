@@ -21,11 +21,11 @@
         <h3>{{song.title}}</h3>
         <h3>{{song.artist}}</h3>
         <p>It's placeholder :)</p>
-        <img src="{% if song.image %} {{ song.image.url }} {% endif %}" width="20%">
+        <img src="{% static song.image_link  %}" width="20%">
         <a href="{% url 'song-details' song.id %}">Song details</a>
 
         <audio class="fc-media" style="width: 100%;" controls>
-         <source src="{% if song.song_file %} {{song.song_file.url}} {% endif %}" type="audio/mp3"/>
+         <source src="{% static song.song_link  %}" type="audio/mp3"/>
         </audio>
         <hr>
     </div>

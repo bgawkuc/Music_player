@@ -110,3 +110,11 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT =os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# temporary media file solution
+HOME_DIR = os.path.abspath(os.path.join(BASE_DIR, os.pardir))
+
+STATICFILES_DIRS = [
+    # os.path.join(BASE_DIR, "static"),
+    os.path.join(HOME_DIR, 'res')
+]
