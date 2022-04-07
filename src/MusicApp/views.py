@@ -30,6 +30,7 @@ def music(request):
             'cover_art_url': 'static/' + song.image_link,
             'duration':      minutes + ':' + seconds,
             'genre':         song.genre.name,
+            'id':            song.id
         }
 
         songs_json.append(ent)
