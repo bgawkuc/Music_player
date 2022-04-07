@@ -30,11 +30,14 @@ music.init = function () {
                     </div>
                 </div>
                 <div class="song-thumbnail ">
-                        <img src="${song.cover_art_url}">
+                        <img src="${song.cover_art_url}" alt="album image">
                         <div class="activity">
                         </div>
-                    </div>
-                
+                </div>
+                <div class="song-info">
+                        <a href="song-details/${song.id}"><i class="fa fa-info"></i></a>
+                </div>
+                       
             `
             playlist.appendChild(container);
             amplitudeSongs.push(song);
