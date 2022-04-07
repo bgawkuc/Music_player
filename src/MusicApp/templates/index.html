@@ -6,23 +6,80 @@
     Music Player
 {% endblock page_title %}
 
+{% block additional_head %}
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/music.css' %}">
+{% endblock additional_head %}
+
 {% block body %}
-    <div>
+    <div class="player-container">
 
-        {% for song in songs %}
-            <div>
-                <h3>{{ song.title }}</h3>
-                <h3>{{ song.artist }}</h3>
-                <p class="test">It's placeholder :)</p>
-                <img src="{% static song.image_link %}" width="20%">
-                <a href="{% url 'song-details' song.id %}">Song details</a>
+        <div id="player">
 
-                <audio class="fc-media" style="width: 100%;" controls>
-                    <source src="{% static song.song_link %}" type="audio/mp3"/>
-                </audio>
-                <hr>
+            <div id="white-player">
+                <div class="white-player-top">
+                    <div>
+                        &nbsp;
+                    </div>
+
+                    <div class="center">
+                        <span class="now-playing">Now Playing</span>
+                    </div>
+
+                    <div>
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div id="white-player-center">
+                    <img data-amplitude-song-info="cover_art_url" class="main-album-art"/>
+
+                    <div class="song-meta-data">
+                        <span data-amplitude-song-info="name" class="song-name"></span>
+                        <span data-amplitude-song-info="artist" class="song-artist"></span>
+                    </div>
+
+                    <div class="time-progress">
+                        <div id="progress-container">
+                            <input type="range" class="amplitude-song-slider"/>
+                            <progress id="song-played-progress" class="amplitude-song-played-progress"></progress>
+                            <progress id="song-buffered-progress" class="amplitude-buffered-progress"
+                                      value="0"></progress>
+                        </div>
+
+                        <div class="time-container">
+                <span class="current-time">
+                  <span class="amplitude-current-minutes" amplitude-main-duration-minutes="true">
+
+                  </span>:<span class="amplitude-current-seconds" amplitude-main-duration-seconds="true"></span>
+                </span>
+                            <span class="duration">
+                    <span class="amplitude-duration-minutes"></span>:<span class="amplitude-duration-seconds"></span>
+                  </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="white-player-controls">
+                    <div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle"></div>
+                    <div class="amplitude-prev" id="previous"></div>
+                    <div class="amplitude-play-pause" id="play-pause"></div>
+                    <div class="amplitude-next" id="next"></div>
+                    <div class="amplitude-repeat" id="repeat"></div>
+                </div>
+
             </div>
-        {% endfor %}
 
+        </div>
+        <div id="songs"></div>
     </div>
 {% endblock body %}
+
+{% block additional_scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/amplitudejs@5.3.2/dist/amplitude.js"></script>
+    <script src="{% static 'js/music.js' %}"></script>
+    <script type="text/javascript">
+        music.songs = {{ songs_json|safe }};
+        music.init();
+    </script>
+{% endblock additional_scripts %}

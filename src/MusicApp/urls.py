@@ -4,7 +4,7 @@ from .views import SongDetails
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.music, name='index'),
     # dla każdego utworu strona z detalami
     path('song-details/<int:pk>', SongDetails.as_view(), name='song-details'),
 ]
