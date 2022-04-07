@@ -8,12 +8,12 @@
 
 {% block additional_head %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-    <link rel="stylesheet" type='text/css' href="{% static 'css/music.css' %}">
+{#    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">#}
+    <link rel="stylesheet" type='text/css' href="{% static 'css/song_details.css' %}">
 {% endblock additional_head %}
 
 {% block body %}
-    <a href="{% url 'index' %}"><i class="fa fa-arrow-left"></i></a>
+    <a href="{% url 'index' %}" class="menu-back"><i class="fa fa-arrow-left"></i></a>
     <h3>{{song.title}}</h3>
     <h3>{{song.artist}}</h3>
 {% endblock body %}

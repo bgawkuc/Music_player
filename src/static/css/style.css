@@ -8,34 +8,29 @@ body {
     font-size: 16pt;
 }
 
-header {
-    background: #282828;
+header, footer {
+    background-color: #292424;
 }
 
 .header {
     color: #d5d5d5;
     text-align: center;
-    padding: 25px;
-}
-
-.header h1 {
-    font-size: 3rem;
+    padding: 5px;
+    font-size: 1.5rem;
 }
 
 footer {
-    background: #282828;
-    margin: 0;
-    padding: 0;
-    left: 0;
-    bottom: 0;
     height: 60px;
     width: 100%;
     overflow: hidden;
+    font-weight: bolder;
 }
 
 .footer {
     color: #d5d5d5;
     padding: 20px;
+    text-align: center;
+    font-size: 17px;
 }
 
 .main {
