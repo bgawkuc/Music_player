@@ -13,6 +13,7 @@ header, footer {
 }
 
 .header {
+    height: 140px;
     color: #d5d5d5;
     text-align: center;
     padding: 5px;

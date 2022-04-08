@@ -14,7 +14,7 @@ class SongDetails(DetailView):
 
 
 def music(request):
-    songs = Song.objects.all()
+    songs = Song.objects.all().order_by('title')
     songs_json = []
     for song in songs:
         minutes = str(song.length // 60)

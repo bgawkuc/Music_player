@@ -61,3 +61,18 @@ music.init = function () {
 
 
 }
+
+let playpause_button = document.getElementById("playpause");
+playpause_button.addEventListener("click",  () => {
+    document.getElementById("playpause-check").classList.toggle("paused");
+})
+
+let prev_button = document.getElementById("previous");
+let next_button = document.getElementById("next");
+
+set_paused = function (){
+    document.getElementById("playpause-check").classList.add("paused");
+}
+
+prev_button.addEventListener("click", set_paused);
+next_button.addEventListener("click", set_paused);

@@ -1,4 +1,8 @@
-
+:root {
+    --primary-player: red;
+    --secondary-player: blue;
+    --unfocused-player: #E1E1E1;
+}
 
 div#white-player {
     /*width: 100vw;*/
@@ -11,7 +15,7 @@ div#white-player {
     /*margin-right: auto;*/
     /*margin-top: 50px;*/
     position: relative;
-    height: 300px;
+    height: 320px;
 }
 
 div.white-player-top {
@@ -70,7 +74,7 @@ div#white-player-center div.song-meta-data span.song-artist {
 }
 
 div#white-player-center div.time-progress {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 div#white-player-center div.time-progress span.current-time {
@@ -373,52 +377,78 @@ div#white-player-controls div#shuffle {
     margin-right: 24px;
 }
 
-div#white-player-controls div#shuffle.amplitude-shuffle-off {
-    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/shuffle-off.svg");
+div#white-player-controls div#shuffle.amplitude-shuffle-off i:before {
+    background: var(--unfocused-player);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: initial;
 }
 
-div#white-player-controls div#shuffle.amplitude-shuffle-on {
-    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/shuffle-on.svg");
+
+div#white-player-controls div#shuffle.amplitude-shuffle-on i:before {
+    background: -moz-linear-gradient(var(--primary-player), var(--secondary-player));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: initial;
 }
 
 div#white-player-controls div#previous {
     display: inline-block;
     height: 53px;
     width: 53px;
+    font-size: 30px;
+    line-height: 53px;
+    background: var(--unfocused-player);
+    border-radius: 100px;
     cursor: pointer;
-    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/previous.svg");
     vertical-align: middle;
-    margin-right: 16px;
 }
 
-div#white-player-controls div#play-pause {
-    display: inline-block;
-    width: 85px;
-    height: 85px;
-    cursor: pointer;
-    margin-top: -20px;
-    vertical-align: middle;
-    margin-right: 16px;
+div#white-player-controls div#previous i:before {
+    background: white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: initial;
 }
 
-div#white-player-controls div#play-pause.amplitude-paused {
-    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/play.svg");
-}
+/*div#white-player-controls div#play-pause {*/
+/*    display: inline-block;*/
+/*    width: 85px;*/
+/*    height: 85px;*/
+/*    cursor: pointer;*/
+/*    margin-top: -20px;*/
+/*    vertical-align: middle;*/
+/*    margin-right: 16px;*/
+/*}*/
+
+/*div#white-player-controls div#play-pause.amplitude-paused {*/
+/*    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/play.svg");*/
+/*}*/
 
 
+/*div#white-player-controls div#play-pause.amplitude-playing {*/
+/*    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/pause.svg");*/
+/*}*/
 
-div#white-player-controls div#play-pause.amplitude-playing {
-    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/pause.svg");
-}
 
 div#white-player-controls div#next {
     display: inline-block;
     height: 53px;
     width: 53px;
+    font-size: 30px;
+    line-height: 53px;
+    background: var(--unfocused-player);
+    border-radius: 100px;
     cursor: pointer;
-    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/next.svg");
     vertical-align: middle;
     margin-right: 24px;
+}
+
+div#white-player-controls div#next i:before {
+    background: white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: initial;
 }
 
 div#white-player-controls div#repeat {
@@ -430,15 +460,22 @@ div#white-player-controls div#repeat {
 }
 
 div#white-player-controls div#repeat.amplitude-repeat-off {
-    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/repeat-off.svg");
+    background: var(--unfocused-player);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: initial;
 }
 
 div#white-player-controls div#repeat.amplitude-repeat-on {
-    background: url("https://521dimensions.com/img/open-source/amplitudejs/examples/dynamic-songs/repeat-on.svg");
+    background: -moz-linear-gradient(var(--primary-player), var(--secondary-player));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: initial;
 }
 
 body {
-background-image: linear-gradient(to right bottom, #e7e4e4, #c4c2c2, #a3a1a1, #838181, #646262);    -webkit-font-smoothing: antialiased;
+    background-image: linear-gradient(to right bottom, #e7e4e4, #c4c2c2, #a3a1a1, #838181, #646262);
+    -webkit-font-smoothing: antialiased;
     font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
     line-height: 1.5;
 }
@@ -451,6 +488,7 @@ background-image: linear-gradient(to right bottom, #e7e4e4, #c4c2c2, #a3a1a1, #8
     /*bottom: 400px;*/
     /*right: 50px;*/
     /*margin-bottom: -50px;*/
+    z-index: 1;
 }
 
 #songs {
@@ -507,7 +545,7 @@ background-image: linear-gradient(to right bottom, #e7e4e4, #c4c2c2, #a3a1a1, #8
     font-weight: bolder;
 }
 
-.song-artist{
+.song-artist {
     font-size: 1rem;
     font-weight: lighter;
 }
@@ -534,4 +572,62 @@ background-image: linear-gradient(to right bottom, #e7e4e4, #c4c2c2, #a3a1a1, #8
 
 .song-details i {
     color: #292424;
+}
+
+#playpause {
+    display: inline-block;
+    margin-left: 16px;
+    margin-right: 16px;
+    background: #21a25b;
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#playpause:hover {
+    background: #1e7040;
+}
+
+#playpause div {
+    display: flex;
+    justify-content: center;
+}
+
+
+#playpause-check {
+    box-sizing: border-box;
+    width: 0;
+    height: 40px;
+
+    border-color: transparent transparent transparent #ffffff;
+    transition: 100ms all ease;
+    cursor: pointer;
+
+
+    border-style: solid;
+    border-width: 20px 0 20px 35px;
+
+    margin-top: 20px;
+    margin-left: 5px;
+}
+
+#playpause-check.paused {
+    border-style: double;
+    border-width: 0px 0 0px 35px;
+    margin-left: 0px;
+}
+
+#playpause-check:hover {
+    border-color: transparent transparent transparent #ffffff;
+}
+
+@-webkit-keyframes pulse {
+   0% {transform: translateZ(0px)}
+  100% {transform: translateZ(200px)}
+}
+@keyframes pulse {
+   0% {transform: translateZ(0px)}
+  100% {transform: translateZ(200px)}
 }
