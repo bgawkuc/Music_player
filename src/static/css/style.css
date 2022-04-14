@@ -1,5 +1,6 @@
 html {
     position: relative;
+    min-height: 100vh;
 }
 
 body {
@@ -25,6 +26,8 @@ footer {
     width: 100%;
     overflow: hidden;
     font-weight: bolder;
+    position: fixed;
+    bottom: 0;
 }
 
 .footer {
