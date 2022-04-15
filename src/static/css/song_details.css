@@ -1,14 +1,72 @@
 body {
-    /*background-image: linear-gradient(to right bottom, #e7e4e4, #c4c2c2, #a3a1a1, #838181, #646262);*/
+    background-image: linear-gradient(to right bottom, #e7e4e4, #c4c2c2, #a3a1a1, #838181, #646262);
     font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
     line-height: 1.5;
 }
 
-.menu-back {
+#container.menu-back {
     font-size: 30px;
     text-decoration: none;
 }
 
-.menu-back i {
+#container .menu-back i {
     color: #292424;
+}
+
+#container .menu-back i:hover {
+    color: #6e6565;
+}
+
+#container #details {
+    display: flex;
+    flex-direction: row;
+    margin-left: 40px;
+}
+
+#container #details #image img {
+    width: 300px;
+    height: 300px;
+    border-radius: 8px;
+}
+
+#container #details #info {
+    margin-left: 20px;
+}
+
+#container #details #info #title {
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+#container #details #info #artist {
+    margin-top: -30px;
+    font-size: 25px;
+}
+
+#container #details #info #genre {
+    font-size: 20px;
+}
+
+#container #details #info #options {
+    display: flex;
+    flex-direction: column;
+}
+
+#container #details #info #options a {
+    width: 280px;
+    height: 40px;
+    background-color: #1e7040;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 17px;
+    column-gap: 10px;
+    cursor: pointer;
+}
+
+#container #details #info #options a:hover {
+    background-color: #21a25b;
 }

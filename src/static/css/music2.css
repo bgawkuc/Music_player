@@ -643,6 +643,10 @@ body {
     color: #292424;
 }
 
+.song-details i:hover {
+    color: #6e6565;
+}
+
 #playpause {
     display: inline-block;
     margin-left: 16px;
