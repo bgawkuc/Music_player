@@ -1,0 +1,72 @@
+body {
+    background-image: linear-gradient(to right bottom, #e7e4e4, #c4c2c2, #a3a1a1, #838181, #646262);
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    line-height: 1.5;
+    min-width: 100vw;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.container #title {
+    width: 600px;
+    background-color: white;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin-bottom: -20px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-size: 30px;
+    color: #21a25b;
+    font-weight: bold;
+}
+
+.container form {
+    width: 600px;
+    border-radius: 8px;
+    background-color: white;
+    padding-bottom: 20px;
+}
+
+.container form div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.container form div label {
+    font-size: 17px;
+    text-transform: lowercase;
+}
+
+.container form div input {
+    width: 200px;
+    height: 25px;
+    text-align: center;
+}
+
+.container form .signup-btn {
+    width: 120px;
+    height: 30px;
+    background-color: #21a25b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 17px;
+    margin-top: 20px;
+}
+
+.container form .signup-btn:hover {
+    background-color: #1e7040;
+}

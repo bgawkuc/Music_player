@@ -16,10 +16,38 @@ header, footer {
 .header {
     height: 140px;
     color: #d5d5d5;
-    text-align: center;
-    padding: 5px;
-    font-size: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
+
+.header #site-name {
+    font-size:40px;
+    margin-left: 40px;
+    text-decoration: none;
+    color: white;
+    font-weight: bolder;
+}
+
+.header #auth a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    flex-direction: row;
+    margin-right: 40px;
+}
+
+.header #auth a:hover {
+    color:#a3a1a1;
+}
+
+.header #auth a #sign-in {
+    margin-right: 100px;
+}
+
+
 
 footer {
     height: 60px;

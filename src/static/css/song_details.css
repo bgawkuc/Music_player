@@ -11,6 +11,7 @@ body {
 
 #container .menu-back i {
     color: #292424;
+    font-size: 30px;
 }
 
 #container .menu-back i:hover {
@@ -52,10 +53,10 @@ body {
     flex-direction: column;
 }
 
-#container #details #info #options a {
-    width: 280px;
+#container #details #info #options a, .favourites-btn {
+    width: 320px;
     height: 40px;
-    background-color: #1e7040;
+    background-color: #21a25b;
     margin-bottom: 10px;
     border-radius: 8px;
     display: flex;
@@ -65,8 +66,9 @@ body {
     font-size: 17px;
     column-gap: 10px;
     cursor: pointer;
+    border: none;
 }
 
-#container #details #info #options a:hover {
-    background-color: #21a25b;
+#container #details #info #options a:hover, .favourites-btn:hover {
+    background-color: #1e7040;
 }

@@ -29,7 +29,7 @@ music.init = function () {
                         <div class="duration">${song.duration}</div>
                     </div>
                     <div class="song-details">
-                        <a href="song-details/${song.id}"><i class="fa fa-info"></i></a>
+                         <a href="song_details/${song.id}"><i class="fa fa-info"></i></a>
                     </div>
                 </div>
                  

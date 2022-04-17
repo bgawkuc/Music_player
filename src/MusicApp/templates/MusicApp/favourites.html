@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/favourites.css' %}">
+    <title>Favourites</title>
+</head>
+
+<body>
+    <a href="{% url 'user_profile' %}" class="menu-back"><i class="fa fa-arrow-left"></i></a>
+    <p id="site-title">FAVOURITES</p>
+    <div class="container">
+        {% if songs %}
+        {% for song in songs %}
+        <div class="song-container">
+            <a  href="{% url 'song_details' song.id %}">
+                <img src="/static/{{song.image_link}}" alt="song-image">
+            </a>
+            <div class="info">
+                <p id="title">{{ song.title }}</p>
+                <p id="artist">{{ song.artist }}</p>
+            </div>
+            <form method="post">
+                  {% csrf_token %}
+                  <input type="submit" value="REMOVE" name={{song.id}}>
+            </form>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+{% endblock body %}

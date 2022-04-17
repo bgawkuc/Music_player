@@ -1,16 +1,8 @@
 import json
-
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.views.generic import DetailView
-
-from .models import Song
-
-
-class SongDetails(DetailView):
-    model = Song
-    context_object_name = 'song'
-    # nadaje nazwe dla tego route
-    template_name = 'MusicApp/song_details.html'
+from django.views.generic import TemplateView
+from .models import Song, Favourite
 
 
 def music(request):
@@ -40,4 +32,44 @@ def music(request):
         'songs_json': json.dumps(songs_json)
     }
 
-    return render(request, 'index.html', variables)
+    return render(request, 'MusicApp/index.html', variables)
+
+
+class UserProfile(TemplateView):
+    context_object_name = 'user_profile'
+    template_name = 'MusicApp/user_profile.html'
+
+
+def favourites(request):
+    songs = Song.objects.filter(favourite__user=request.user, favourite__is_fav=True).distinct()
+    print(f'songs: {songs}')
+
+    if request.method == "POST":
+        pk = list(request.POST.keys())[1]
+        favourite_song = Favourite.objects.filter(user=request.user, song__id=pk, is_fav=True)
+        favourite_song.delete()
+    context = {'songs': songs}
+    return render(request, 'MusicApp/favourites.html', context=context)
+
+
+@login_required(login_url='sign_in')
+def songDetails(request, pk):
+    songs = Song.objects.filter(id=pk).first()
+    is_favourite = Favourite.objects.filter(user=request.user).filter(song=pk).values('is_fav')
+
+    if request.method == "POST":
+        if 'add-favourite' in request.POST:
+            is_fav = True
+            query = Favourite(user=request.user, song=songs, is_fav=is_fav)
+            print(f'query: {query}')
+            query.save()
+        elif 'remove-favourite' in request.POST:
+            is_fav = True
+            query = Favourite.objects.filter(user=request.user, song=songs, is_fav=is_fav)
+            print(f'user: {request.user}')
+            print(f'song: {songs.id} - {songs}')
+            print(f'query: {query}')
+            query.delete()
+
+    context = {'songs': songs, 'is_favourite': is_favourite}
+    return render(request, 'MusicApp/song_details.html', context=context)

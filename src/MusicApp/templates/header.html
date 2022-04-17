@@ -1,5 +1,16 @@
+{% load static %}
+
 <header>
     <div class="header">
-        <h1>Music Player</h1>
+        <a href="{% url 'index' %}" id="site-name">Music Player</a>
+        <div id="auth">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'user_profile' %}">{{ request.user }}</a>
+                <a href="{% url 'sign_out' %}">sign out</a>
+            {% else %}
+                <a href="{% url 'sign_in' %}" id="sign-in">sign in</a>
+                <a href="{% url 'sign_up' %}" id="sign-up">sign up</a>
+            {% endif %}
+        </div>
     </div>
 </header>
