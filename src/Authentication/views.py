@@ -8,7 +8,7 @@ from django.contrib.auth.views import LoginView
 
 
 class SignIn(LoginView):
-    template_name = 'authentication/sign_in.html'
+    template_name = 'Authentication/sign_in.html'
     fields = '__all__'
     redirect_authenticated_user = True
 
@@ -17,7 +17,7 @@ class SignIn(LoginView):
 
 
 class SignUp(FormView):
-    template_name = 'authentication/sign_up.html'
+    template_name = 'Authentication/sign_up.html'
     redirect_authenticated_user = True
     form_class = UserCreationForm
     success_url = reverse_lazy('index')
