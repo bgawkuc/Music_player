@@ -1,16 +1,30 @@
+from itertools import chain
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from .forms import PlaylistForm
+from .forms import PlaylistForm, SearchQueryForm
 from .models import Song, Favourite, Playlist, PlaylistSong
 from .player import getSongsJson
 
 
 def music(request):
     songs = Song.objects.all().order_by('title')
-    variables = getSongsJson(songs)
 
+    if request.method == "POST":
+        if "query-search" in request.POST:
+            form = SearchQueryForm(request.POST)
+            if form.is_valid():
+                query = form.cleaned_data['query']
+                print(query)
+                songs_title = Song.objects.filter(title__icontains=query)
+                songs_author = Song.objects.filter(artist__icontains=query)
+                songs_genre = Song.objects.filter(genre__name__icontains=query)
+                songs = list(set(chain(songs_title, songs_author, songs_genre)))
+                print(songs)
+
+    variables = getSongsJson(songs)
     return render(request, 'MusicApp/index.html', variables)
 
 

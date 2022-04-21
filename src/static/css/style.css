@@ -23,7 +23,7 @@ header, footer {
 }
 
 .header #site-name {
-    font-size:40px;
+    font-size: 40px;
     margin-left: 40px;
     text-decoration: none;
     color: white;
@@ -40,13 +40,12 @@ header, footer {
 }
 
 .header #auth a:hover {
-    color:#a3a1a1;
+    color: #a3a1a1;
 }
 
 .header #auth a #sign-in {
     margin-right: 100px;
 }
-
 
 
 footer {
@@ -67,4 +66,42 @@ footer {
 
 .main {
     padding: 20px;
+}
+
+.search {
+    height: 50px;
+}
+
+.query-input {
+    width: 500px;
+    height: 30px;
+    border: 0;
+    border-radius: 15px;
+    background: #fff;
+    vertical-align: top;
+    font-size: 1.6rem;
+    color: #07934c;
+    padding: 10px;
+}
+
+.query-input:focus {
+    outline: none !important;
+    box-shadow: 0 0 7px #13d367;
+}
+
+
+.query-btn {
+    width: 50px;
+    height: 50px;
+    color: white;
+    border: 0;
+    border-radius: 25px;
+    font-size: 1.6rem;
+    background: #21a25b;
+    transition: 0.1s ease;
+
+}
+
+.query-btn:hover {
+    background: #1e7040;
 }
