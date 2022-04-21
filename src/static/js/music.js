@@ -1,3 +1,7 @@
+set_paused = function (){
+    document.getElementById("playpause-check").classList.add("paused");
+}
+
 var music = {
     songs: {},
 }
@@ -18,6 +22,8 @@ music.init = function () {
 
             container.setAttribute('data-amplitude-song-index', i.toString());
             container.className = classNames;
+            container.addEventListener("click", set_paused);
+
             container.innerHTML = `
                 <div data-amplitude-song-index=${i} class="song-info">
                     <div class="song-basic">
@@ -29,7 +35,7 @@ music.init = function () {
                         <div class="duration">${song.duration}</div>
                     </div>
                     <div class="song-details">
-                         <a href="song_details/${song.id}"><i class="fa fa-info"></i></a>
+                         <a href="/song_details/${song.id}"><i class="fa fa-info"></i></a>
                     </div>
                 </div>
                  
@@ -69,10 +75,6 @@ playpause_button.addEventListener("click",  () => {
 
 let prev_button = document.getElementById("previous");
 let next_button = document.getElementById("next");
-
-set_paused = function (){
-    document.getElementById("playpause-check").classList.add("paused");
-}
 
 prev_button.addEventListener("click", set_paused);
 next_button.addEventListener("click", set_paused);

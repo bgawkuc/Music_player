@@ -17,14 +17,29 @@
 
         <div id="details">
             <div id="image">
-                <img src="../static/{{songs.image_link}}" alt="song-image">
+                <img src="../static/{{ song.image_link }}" alt="song-image">
             </div>
             <div id="info">
-                <p id="title">{{songs.title}}</p>
-                <p id="artist">{{songs.artist}}</p>
-                <p id="genre">{{ songs.genre.name }}</p>
+                <p id="title">{{ song.title }}</p>
+                <p id="artist">{{ song.artist }}</p>
+                <p id="genre">{{ song.genre.name }}</p>
                 <div id="options">
-                    <a><i class="fa fa-plus" aria-hidden="true"></i> ADD TO PLAYLIST</a>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <select style="margin-left: 10px;width: 170px;" class="playlist-btn"
+                                onChange="form.submit();" name="add-playlist">
+                            <option selected="selected" disabled style="color: black;">Add to Playlist</option>
+                            {% if playlists %}
+                                {% for playlist in playlists %}
+                                    <option value={{ playlist.id }}>{{ playlist.name }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </form>
+
+{#                    <a><label><i class="fa fa-plus" aria-hidden="true"></i> ADD TO PLAYLIST</label></a>#}
 
                     <form method="post">
                         {% csrf_token %}

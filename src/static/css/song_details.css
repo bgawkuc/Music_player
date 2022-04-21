@@ -53,7 +53,7 @@ body {
     flex-direction: column;
 }
 
-#container #details #info #options a, .favourites-btn {
+.playlist-btn, .favourites-btn {
     width: 320px;
     height: 40px;
     background-color: #21a25b;

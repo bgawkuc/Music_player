@@ -1,10 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% load static %}
+
+{% block page_title %}
+    Playlists
+{% endblock page_title %}
+
+{% block additional_head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/playlists.css' %}">
+{% endblock additional_head %}
+
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="playlist-create">
+            <input class="playlist-create-input" type="text" name="name">
+            <button type="submit" class="playlist-create-btn" name="create-playlist">Create playlist</button>
+        </div>
+
+    </form>
+
+    {% if playlists %}
+
+        <div class="playlists">
+            <div class="playlist-list">
+
+                {% for playlist in playlists %}
+                    <a href="{{ playlist.id }}" class="playlist-item">
+                        <div class="playlist-name">
+                            Name:
+                            {{ playlist.name }}
+                        </div>
+                        <div class="playlist-user">
+                            Owner:
+                            {{ playlist.owner.username }}
+                        </div>
+                    </a>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="playlist-delete-btn" name="delete-playlist"
+                                value="{{ playlist.id }}">
+                            Delete
+                        </button>
+                    </form>
+                    <br>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    {% else %}
+        <p> Nothing here :C</p>
+    {% endif %}
+{% endblock body %}

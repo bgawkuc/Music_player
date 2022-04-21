@@ -40,3 +40,15 @@ class Favourite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
     is_fav = models.BooleanField(default=False)
+
+
+class Playlist(models.Model):
+    id = models.AutoField(primary_key=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+
+
+class PlaylistSong(models.Model):
+    id = models.AutoField(primary_key=True)
+    playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
