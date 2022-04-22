@@ -12,6 +12,8 @@
 {% endblock additional_head %}
 
 {% block body %}
+    <a href="{% url 'playlists' %}" class="menu-back"><i class="fa fa-arrow-left"></i></a>
+
     {% if songs %}
         <div class="player-container">
 

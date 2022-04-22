@@ -67,8 +67,13 @@ body {
     column-gap: 10px;
     cursor: pointer;
     border: none;
+    text-transform: uppercase;
 }
 
-#container #details #info #options a:hover, .favourites-btn:hover {
+.playlist-btn option {
+    text-align: center;
+}
+
+#container #details #info #options a:hover, .favourites-btn:hover, .playlist-btn:hover {
     background-color: #1e7040;
 }

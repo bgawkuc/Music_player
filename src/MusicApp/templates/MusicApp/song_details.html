@@ -28,9 +28,8 @@
                     <form method="post">
                         {% csrf_token %}
 
-                        <select style="margin-left: 10px;width: 170px;" class="playlist-btn"
-                                onChange="form.submit();" name="add-playlist">
-                            <option selected="selected" disabled style="color: black;">Add to Playlist</option>
+                        <select class="playlist-btn" onChange="form.submit();" name="add-playlist">
+                            <option selected="selected" disabled style="color: black;" >Add to Playlist</option>
                             {% if playlists %}
                                 {% for playlist in playlists %}
                                     <option value={{ playlist.id }}>{{ playlist.name }}</option>

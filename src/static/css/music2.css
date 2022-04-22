@@ -4,6 +4,20 @@
     --unfocused-player: #E1E1E1;
 }
 
+.menu-back {
+    font-size: 30px;
+    text-decoration: none;
+}
+
+.menu-back i {
+    color: #292424;
+    font-size: 30px;
+}
+
+.menu-back i:hover {
+    color: #6e6565;
+}
+
 div#white-player {
     background-color: #FFFFFF;
     box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
