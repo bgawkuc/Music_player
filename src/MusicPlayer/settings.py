@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MusicApp.apps.MusicAppConfig',
+    'Authentication.apps.AuthenticationConfig',
 ]
 
 MIDDLEWARE = [
@@ -107,6 +108,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT =os.path.join(BASE_DIR, 'media')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# temporary media file solution
+HOME_DIR = os.path.abspath(os.path.join(BASE_DIR, os.pardir))
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    os.path.join(HOME_DIR, 'res')
+]
+
+LOGIN_REDIRECT_URL = 'index'

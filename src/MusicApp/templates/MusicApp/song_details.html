@@ -1,12 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <p>Future song details:)</p>
-    <a href="{% url 'index' %}">Back</a>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% load static %}
+
+{% block page_title %}
+    Music Player
+{% endblock page_title %}
+
+{% block additional_head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/song_details.css' %}">
+{% endblock additional_head %}
+
+{% block body %}
+    <div id="container">
+        <a href="{% url 'index' %}" class="menu-back"><i class="fa fa-arrow-left"></i></a>
+
+        <div id="details">
+            <div id="image">
+                <img src="../static/{{ song.image_link }}" alt="song-image">
+            </div>
+            <div id="info">
+                <p id="title">{{ song.title }}</p>
+                <p id="artist">{{ song.artist }}</p>
+                <p id="genre">{{ song.genre.name }}</p>
+                <div id="options">
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <select class="playlist-btn" onChange="form.submit();" name="add-playlist">
+                            <option selected="selected" disabled style="color: black;" >Add to Playlist</option>
+                            {% if playlists %}
+                                {% for playlist in playlists %}
+                                    <option value={{ playlist.id }}>{{ playlist.name }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </form>
+
+{#                    <a><label><i class="fa fa-plus" aria-hidden="true"></i> ADD TO PLAYLIST</label></a>#}
+
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if is_favourite %}
+                            <span>
+                                <button type="submit" name="remove-favourite" class="favourites-btn">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                    REMOVE FROM FAVOURITES
+                                </button>
+                            </span>
+                        {% else %}
+                            <span>
+                                <button type="submit" name="add-favourite" class="favourites-btn">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    ADD TO FAVOURITES
+                                </button>
+                            </span>
+                        {% endif %}
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock body %}
+
+{% block additional_scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/amplitudejs@5.3.2/dist/amplitude.js"></script>
+    <script src="{% static 'js/song_details.js' %}"></script>
+    <script type="text/javascript">
+    </script>
+{% endblock additional_scripts %}
+
+

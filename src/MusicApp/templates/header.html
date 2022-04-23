@@ -1,0 +1,27 @@
+{% load static %}
+
+<header>
+    <div class="header">
+        <a href="{% url 'index' %}" id="site-name">Music Player</a>
+        <div class="search">
+            <form method="post">
+                {% csrf_token %}
+                <div class="search">
+                    <input class="query-input" type="text" name="query">
+                    <button type="submit" class="query-btn" name="query-search">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div id="auth">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'user_profile' %}">{{ request.user }}</a>
+                <a href="{% url 'sign_out' %}">sign out</a>
+            {% else %}
+                <a href="{% url 'sign_in' %}" id="sign-in">sign in</a>
+                <a href="{% url 'sign_up' %}" id="sign-up">sign up</a>
+            {% endif %}
+        </div>
+    </div>
+</header>
