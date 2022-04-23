@@ -33,3 +33,6 @@ class SignUp(FormView):
             return redirect('index')
         return super(SignUp, self).get(*args, **kwargs)
 
+    def get_success_url(self):
+        return reverse_lazy('index')
+

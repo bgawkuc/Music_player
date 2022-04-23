@@ -74,7 +74,7 @@ footer {
 
 .query-input {
     width: 500px;
-    height: 30px;
+    /*height: 30px;*/
     border: 0;
     border-radius: 15px;
     background: #fff;
