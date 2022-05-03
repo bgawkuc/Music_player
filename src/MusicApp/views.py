@@ -122,13 +122,14 @@ def playlist_song(request, pk):
 
     variables = getSongsJson(songs)
 
+    print(variables)
     # song deletion
     if request.method == "POST":
         song_id = list(request.POST.keys())[1]
         p_song = PlaylistSong.objects.get(playlist=found_playlist, song__id=song_id)
         p_song.delete()
 
-    context = {'playlist': found_playlist, 'variables': variables, 'songs': songs_ids}
+    context = {'playlist': found_playlist, 'variables': variables, 'songs': songs}
     return render(request, 'MusicApp/playlist_song.html', context=context)
 
 
@@ -136,7 +137,7 @@ def song(request, pk):
     songs = list(Song.objects.filter(id=pk))
     variables = getSongsJson(songs)
 
-    context = {'variables': variables, 'song': songs[0]}
+    context = {'variables': variables, 'song': songs[0], 'songs': songs}
     return render(request, 'MusicApp/song.html', context=context)
 
 
@@ -153,5 +154,5 @@ def genre(request, pk):
     songs = list(Song.objects.filter(genre=genre))
     variables = getSongsJson(songs)
 
-    context = {'variables': variables, 'genre': genre}
+    context = {'variables': variables, 'genre': genre, 'songs': songs}
     return render(request, 'MusicApp/genre.html', context=context)

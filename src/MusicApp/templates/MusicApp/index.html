@@ -13,82 +13,8 @@
 {% block body %}
 
     {% if songs %}
-        <div class="player-container">
-
-            <div id="player">
-
-                <div id="white-player">
-                    <div class="white-player-top">
-                    </div>
-
-                    <div id="white-player-center">
-                        <div class="song-description">
-                            <img data-amplitude-song-info="cover_art_url" class="main-album-art"/>
-
-                            <div class="song-meta-data">
-                                <span data-amplitude-song-info="name" class="song-name"></span>
-                                <span data-amplitude-song-info="artist" class="song-artist"></span>
-                            </div>
-                        </div>
-
-                        <div class="time-progress">
-                            <div id="progress-container">
-                                <input type="range" class="amplitude-song-slider"/>
-                                <progress id="song-played-progress" class="amplitude-song-played-progress"></progress>
-                                <progress id="song-buffered-progress" class="amplitude-buffered-progress"
-                                          value="0"></progress>
-                            </div>
-
-                            <div class="time-container">
-                                <span class="current-time">
-                                <span class="amplitude-current-minutes" amplitude-main-duration-minutes="true">
-
-                                </span>:<span class="amplitude-current-seconds" amplitude-main-duration-seconds="true"></span>
-                                </span>
-                                <span class="duration">
-                                <span class="amplitude-duration-minutes"></span>:<span class="amplitude-duration-seconds"></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="white-player-controls">
-                        <div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle">
-                            <i class="fa fa-random"
-                               aria-hidden="true"></i></div>
-                        <div class="amplitude-prev" id="previous">
-                            <i class="fa fa-step-backward" aria-hidden="true"></i>
-                        </div>
-                        <div class="amplitude-play-pause" id="playpause">
-                            <div>
-                                <div id="playpause-check">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="amplitude-next" id="next">
-                            <i class="fa fa-step-forward" aria-hidden="true"></i></div>
-                        <div class="amplitude-repeat" id="repeat">
-                            <i class="fa fa-repeat" aria-hidden="true"></i>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-            <div id="songs"></div>
-        </div>
+        {% include 'MusicApp/songs.html' %}
     {% else %}
         <p>Nothing found</p>
     {% endif %}
 {% endblock body %}
-
-{% block additional_scripts %}
-    {% if songs %}
-        <script src="https://cdn.jsdelivr.net/npm/amplitudejs@5.3.2/dist/amplitude.js"></script>
-        <script src="{% static 'js/music.js' %}"></script>
-        <script type="text/javascript">
-            music.songs = {{ variables.songs_json|safe }};
-            music.init();
-        </script>
-    {% endif %}
-{% endblock additional_scripts %}

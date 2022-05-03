@@ -1,4 +1,5 @@
 {% load static %}
+{% load mathfilters %}
 
 <div class="player-container">
 
@@ -64,7 +65,39 @@
         </div>
 
     </div>
-    <div id="songs"></div>
+    <div id="songs">
+        {% for song in songs %}
+            <div class="amplitude-song-container amplitude-play" data-amplitude-song-index={{ forloop.counter0 }}>
+                <div class="song-info">
+                    <div class="song-basic">
+                        <div class="song-title">{{ song.title }}</div>
+                        <div class="song-artist"> {{ song.artist.name }}</div>
+                    </div>
+                    <div class="song-addit">
+                        <div class="genre">{{ song.genre.name }}</div>
+                        <div class="duration">{{ song.length|intdiv:60 }}:
+                            {% with minutes=song.length|mod:60 %}
+                                {% if minutes < 10 %}
+                                    {{ minutes|mul:10 }}
+                                {% else %}
+                                    {{ minutes }}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="song-details">
+                        <a href="/song_details/{{ song.id }}"><i class="fa fa-info"></i></a>
+                    </div>
+                </div>
+
+                <div class="song-thumbnail ">
+                    <img src="/static/{{ song.image_link }}" alt="album image">
+                    <div class="activity">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 
