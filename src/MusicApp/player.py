@@ -27,6 +27,4 @@ def getSongsJson(songs):
         'songs_json': json.dumps(songs_json)
     }
 
-    print(variables)
-
     return variables

@@ -9,4 +9,5 @@ urlpatterns = [
     path('user_profile/favourites/', views.favourites, name='favourites'),
     path('user_profile/playlists/', views.playlists, name='playlists'),
     path('user_profile/playlists/<int:pk>', views.playlist_song, name='playlist_songs'),
+    path('search/', views.search, name='search')
 ]

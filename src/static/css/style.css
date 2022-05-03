@@ -68,13 +68,21 @@ footer {
     padding: 20px;
 }
 
+.search-query {
+    height: 50px;
+    margin: 0;
+}
+
 .search {
     height: 50px;
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 15px;
 }
 
 .query-input {
-    width: 500px;
-    height: 30px;
+    width: 100%;
     border: 0;
     border-radius: 15px;
     background: #fff;
@@ -92,14 +100,20 @@ footer {
 
 .query-btn {
     width: 50px;
-    height: 50px;
     color: white;
     border: 0;
     border-radius: 25px;
     font-size: 1.6rem;
     background: #21a25b;
     transition: 0.1s ease;
+    flex-shrink: 0;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
 
+.query-btn .fa-search {
+    font-size: 1.6rem;
 }
 
 .query-btn:hover {

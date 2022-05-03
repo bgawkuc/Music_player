@@ -5,27 +5,35 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 from .forms import PlaylistForm, SearchQueryForm
-from .models import Song, Favourite, Playlist, PlaylistSong
+from .models import Song, Favourite, Playlist, PlaylistSong, Genre
 from .player import getSongsJson
 
 
 def music(request):
     songs = Song.objects.all().order_by('title')
 
-    if request.method == "POST":
-        if "query-search" in request.POST:
-            form = SearchQueryForm(request.POST)
+    variables = getSongsJson(songs)
+    context = {'songs': songs, 'variables': variables}
+    return render(request, 'MusicApp/index.html', context=context)
+
+
+def search(request):
+    songs = []
+    artists = []
+    genres = []
+
+    if request.method == "GET":
+        if "query" in request.GET:
+            form = SearchQueryForm(request.GET)
             if form.is_valid():
                 query = form.cleaned_data['query']
                 print(query)
-                songs_title = Song.objects.filter(title__icontains=query)
-                songs_author = Song.objects.filter(artist__icontains=query)
-                songs_genre = Song.objects.filter(genre__name__icontains=query)
-                songs = list(set(chain(songs_title, songs_author, songs_genre)))
-                print(songs)
+                songs = Song.objects.filter(title__icontains=query)
+                artists = Song.objects.filter(artist__icontains=query).values('artist').distinct()
+                genres = Genre.objects.filter(name__icontains=query)
 
-    variables = getSongsJson(songs)
-    return render(request, 'MusicApp/index.html', variables)
+    context = {'songs': songs, 'artists': artists, 'genres': genres}
+    return render(request, 'MusicApp/search.html', context=context)
 
 
 class UserProfile(TemplateView):

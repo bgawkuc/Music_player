@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block page_title %}
+    Music Player
+{% endblock page_title %}
+
+{% block additional_head %}
+    <link rel="stylesheet" type='text/css' href="{% static 'css/music2.css' %}">
+{% endblock additional_head %}
+
+{% block body %}
+
+    {% if  songs or artists or genres %}
+        {% if songs %}
+            <div class="song-search">
+                <p>Songs:</p>
+                {% for song in songs %}
+                    <div style="margin-left: 50px" class="song-item">
+                        {{ song.title }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if artists %}
+            <div class="artist-search">
+                <p>Artists:</p>
+                {# artist := { 'artist': <name> } #}
+                {% for artist in artists %}
+                    <div style="margin-left: 50px" class="artist-item"> {# link to a artist page, let say based on an unqiue name #}
+                        {{ artist.artist }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if genres %}
+            <div class="genre-search">
+                <p>Genres:</p>
+                {% for genre in genres %}
+                    <div style="margin-left: 50px" class="genre-item"> {# link to a genre page #}
+                        {{ genre.name }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% else %}
+        <p>Nothing found</p>
+    {% endif %}
+{% endblock body %}
+
+{% block additional_scripts %}
+
+{% endblock additional_scripts %}
