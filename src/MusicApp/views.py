@@ -21,6 +21,7 @@ def search(request):
     songs = []
     artists = []
     genres = []
+    playlists = []
 
     if request.method == "GET":
         if "query" in request.GET:
@@ -31,8 +32,9 @@ def search(request):
                 songs = Song.objects.filter(title__icontains=query)
                 artists = Artist.objects.filter(name__icontains=query)
                 genres = Genre.objects.filter(name__icontains=query)
+                playlists = Playlist.objects.filter(owner=request.user, name__icontains=query)
 
-    context = {'songs': songs, 'artists': artists, 'genres': genres}
+    context = {'songs': songs, 'artists': artists, 'genres': genres, 'playlists': playlists}
     return render(request, 'MusicApp/search.html', context=context)
 
 
