@@ -10,7 +10,7 @@ static_url = settings.STATIC_URL
 class Song(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50)
-    artist = models.CharField(max_length=50)
+    artist = models.ForeignKey('Artist', on_delete=models.DO_NOTHING)
     song_link = models.CharField(max_length=255)
     image_link = models.CharField(max_length=255)
     genre = models.ForeignKey('Genre', on_delete=models.DO_NOTHING)
@@ -28,6 +28,11 @@ class SongDetail(models.Model):
     valence = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     acousticness = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     speechiness = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
+
+
+class Artist(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
 
 
 class Genre(models.Model):

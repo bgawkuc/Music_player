@@ -1,4 +1,4 @@
-from MusicApp.models import Song, SongDetail, Genre
+from MusicApp.models import Song, SongDetail, Genre, Artist
 import csv
 
 
@@ -17,11 +17,19 @@ def run():
         Song.objects.all().delete()
         SongDetail.objects.all().delete()
         Genre.objects.all().delete()
+        Artist.objects.all().delete()
 
+        artists = dict()
         genres = dict()
 
         for row in reader:
             if row[14] != '':
+
+                artist_name = row[2]
+                if artists.get(artist_name) is None:
+                    artist = Artist(name=artist_name)
+                    artists[artist_name] = artist
+                    artist.save()
 
                 genre_name = toGenre(row[3])
                 if genres.get(genre_name) is None:
@@ -46,7 +54,7 @@ def run():
 
                 song = Song(
                     title=row[1],
-                    artist=row[2],
+                    artist=artists.get(artist_name),
                     genre=genres.get(genre_name),
                     length=row[10],
                     details=song_detail,

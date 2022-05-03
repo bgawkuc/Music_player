@@ -12,7 +12,7 @@ def getSongsJson(songs):
 
         ent = {
             'name':          song.title,
-            'artist':        song.artist,
+            'artist':        song.artist.name,
             'url':           '/static/' + song.song_link,
             'cover_art_url': '/static/' + song.image_link,
             'duration':      minutes + ':' + seconds,

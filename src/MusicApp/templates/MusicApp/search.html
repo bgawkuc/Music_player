@@ -17,9 +17,11 @@
             <div class="song-search">
                 <p>Songs:</p>
                 {% for song in songs %}
-                    <div style="margin-left: 50px" class="song-item">
-                        {{ song.title }}
-                    </div>
+                    <a href="/song/{{ song.id }}">
+                        <div style="margin-left: 50px" class="song-item">
+                            {{ song.title }}
+                        </div>
+                    </a>
                 {% endfor %}
             </div>
         {% endif %}
@@ -28,9 +30,12 @@
                 <p>Artists:</p>
                 {# artist := { 'artist': <name> } #}
                 {% for artist in artists %}
-                    <div style="margin-left: 50px" class="artist-item"> {# link to a artist page, let say based on an unqiue name #}
-                        {{ artist.artist }}
-                    </div>
+                    <a href="/artist/{{ artist.id }}">
+                        <div style="margin-left: 50px" class="artist-item">
+                            {# link to a artist page, let say based on an unqiue name #}
+                            {{ artist.name }}
+                        </div>
+                    </a>
                 {% endfor %}
             </div>
         {% endif %}
@@ -38,9 +43,11 @@
             <div class="genre-search">
                 <p>Genres:</p>
                 {% for genre in genres %}
-                    <div style="margin-left: 50px" class="genre-item"> {# link to a genre page #}
-                        {{ genre.name }}
-                    </div>
+                    <a href="/genre/{{ genre.id }}">
+                        <div style="margin-left: 50px" class="genre-item"> {# link to a genre page #}
+                            {{ genre.name }}
+                        </div>
+                    </a>
                 {% endfor %}
             </div>
         {% endif %}

@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 from .forms import PlaylistForm, SearchQueryForm
-from .models import Song, Favourite, Playlist, PlaylistSong, Genre
+from .models import Song, Favourite, Playlist, PlaylistSong, Genre, Artist
 from .player import getSongsJson
 
 
@@ -29,7 +29,7 @@ def search(request):
                 query = form.cleaned_data['query']
                 print(query)
                 songs = Song.objects.filter(title__icontains=query)
-                artists = Song.objects.filter(artist__icontains=query).values('artist').distinct()
+                artists = Artist.objects.filter(name__icontains=query)
                 genres = Genre.objects.filter(name__icontains=query)
 
     context = {'songs': songs, 'artists': artists, 'genres': genres}
@@ -128,3 +128,28 @@ def playlist_song(request, pk):
 
     context = {'playlist': found_playlist, 'variables': variables, 'songs': songs_ids}
     return render(request, 'MusicApp/playlist_song.html', context=context)
+
+
+def song(request, pk):
+    songs = list(Song.objects.filter(id=pk))
+    variables = getSongsJson(songs)
+
+    context = {'variables': variables, 'song': songs[0]}
+    return render(request, 'MusicApp/song.html', context=context)
+
+
+def artist(request, pk):
+    songs = list(Song.objects.filter(artist_id=pk))
+    variables = getSongsJson(songs)
+
+    context = {'variables': variables, 'songs': songs}
+    return render(request, 'MusicApp/artist.html', context=context)
+
+
+def genre(request, pk):
+    genre = Genre.objects.filter(id=pk).first()
+    songs = list(Song.objects.filter(genre=genre))
+    variables = getSongsJson(songs)
+
+    context = {'variables': variables, 'genre': genre}
+    return render(request, 'MusicApp/genre.html', context=context)
