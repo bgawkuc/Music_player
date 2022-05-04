@@ -13,3 +13,11 @@ class StatSinglePlay(models.Model):
 
     def increaseCount(self):
         self.count += 1
+
+
+class StatDurationPlay(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    song = models.ForeignKey(Song, on_delete=models.DO_NOTHING)
+    date = models.DateField(auto_now=True)
+    time_units = models.PositiveIntegerField()

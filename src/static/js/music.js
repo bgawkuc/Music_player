@@ -2,7 +2,7 @@ set_paused = function () {
     document.getElementById("playpause-check").classList.add("paused");
 }
 
-play_song = function (id){
+play_song = function (id) {
     Amplitude.playNow(music.songs[id]);
 
     let player = document.getElementById("player");
@@ -15,6 +15,10 @@ play_song = function (id){
 let music = {
     songs: {},
 }
+
+let lock = false;
+let time_units = 0;
+let last_index = null;
 
 music.init = function () {
 
@@ -33,12 +37,44 @@ music.init = function () {
             'volume': 50,
             'start_song': null,
             'callbacks': {
-                loadstart: function (){
-                    $.ajax({
-                        type: "POST",
-                        url: '/stats/single/',
-                        data: {csrfmiddlewaretoken: csrftoken, song: Amplitude.getSongsState()[Amplitude.getActiveIndex()].id}
-                    })
+                loadstart: function () {
+                    time_units -= 1; // remove first timeunit init play
+                    if (time_units > 0 && last_index != null) {
+                        $.ajax({
+                            type: "POST",
+                            url: '/stats/duration/',
+                            data: {
+                                csrfmiddlewaretoken: csrftoken,
+                                song: Amplitude.getSongsState()[last_index].id,
+                                time_units: time_units
+                            }
+                        });
+                    }
+                    time_units = 0;
+
+                    if (last_index != null) {
+                        $.ajax({
+                            type: "POST",
+                            url: '/stats/single/',
+                            data: {
+                                csrfmiddlewaretoken: csrftoken,
+                                song: Amplitude.getSongsState()[Amplitude.getActiveIndex()].id
+                            }
+                        });
+                    }
+                    last_index = Amplitude.getActiveIndex()
+                },
+                timeupdate: () => {
+                    if (!lock) {
+                        time_units += 1;
+                    }
+                    console.log("beep")
+                },
+                seeking: () => {
+                    lock = true;
+                },
+                seeked: () => {
+                    lock = false;
                 }
             }
         };
@@ -69,8 +105,23 @@ next_button.addEventListener("click", set_paused);
 let songs_divs = document.getElementsByClassName("amplitude-song-container");
 for (let song of songs_divs) {
     let id = song.getAttribute("data-amplitude-song-index");
-    song.addEventListener("click",() => {
+    song.addEventListener("click", () => {
         play_song(id);
     });
     song.addEventListener("click", set_paused);
+}
+
+window.onunload = () => {
+    if (time_units > 0 && last_index != null) {
+        $.ajax({
+            type: "POST",
+            url: '/stats/duration/',
+            data: {
+                csrfmiddlewaretoken: csrftoken,
+                song: Amplitude.getSongsState()[last_index].id,
+                time_units: time_units
+            },
+            async: false // depends on browser
+        });
+    }
 }
