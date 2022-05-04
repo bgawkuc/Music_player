@@ -10,18 +10,19 @@
         {% block page_title %}{% endblock page_title %}
     </title>
 
-    {%  block additional_head %}{% endblock additional_head %}
+    {% block additional_head %}{% endblock additional_head %}
     <link rel="stylesheet" type='text/css' href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="{% static 'js/script.js' %}" defer></script>
 </head>
 <body>
 {% include 'header.html' %}
-
+<div data-simplebar></div>
 <div class="main">
     {% block body %}{% endblock body %}
 </div>
 
 {% include 'footer.html' %}
-{%  block additional_scripts %}{% endblock additional_scripts %}
+{% block additional_scripts %}{% endblock additional_scripts %}
 </body>
 </html>

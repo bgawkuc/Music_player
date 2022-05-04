@@ -5,27 +5,37 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 from .forms import PlaylistForm, SearchQueryForm
-from .models import Song, Favourite, Playlist, PlaylistSong
+from .models import Song, Favourite, Playlist, PlaylistSong, Genre, Artist
 from .player import getSongsJson
 
 
 def music(request):
     songs = Song.objects.all().order_by('title')
 
-    if request.method == "POST":
-        if "query-search" in request.POST:
-            form = SearchQueryForm(request.POST)
+    variables = getSongsJson(songs)
+    context = {'songs': songs, 'variables': variables}
+    return render(request, 'MusicApp/index.html', context=context)
+
+
+def search(request):
+    songs = []
+    artists = []
+    genres = []
+    playlists = []
+
+    if request.method == "GET":
+        if "query" in request.GET:
+            form = SearchQueryForm(request.GET)
             if form.is_valid():
                 query = form.cleaned_data['query']
                 print(query)
-                songs_title = Song.objects.filter(title__icontains=query)
-                songs_author = Song.objects.filter(artist__icontains=query)
-                songs_genre = Song.objects.filter(genre__name__icontains=query)
-                songs = list(set(chain(songs_title, songs_author, songs_genre)))
-                print(songs)
+                songs = Song.objects.filter(title__icontains=query)
+                artists = Artist.objects.filter(name__icontains=query)
+                genres = Genre.objects.filter(name__icontains=query)
+                playlists = Playlist.objects.filter(owner=request.user, name__icontains=query)
 
-    variables = getSongsJson(songs)
-    return render(request, 'MusicApp/index.html', variables)
+    context = {'songs': songs, 'artists': artists, 'genres': genres, 'playlists': playlists}
+    return render(request, 'MusicApp/search.html', context=context)
 
 
 class UserProfile(TemplateView):
@@ -112,11 +122,37 @@ def playlist_song(request, pk):
 
     variables = getSongsJson(songs)
 
+    print(variables)
     # song deletion
     if request.method == "POST":
         song_id = list(request.POST.keys())[1]
         p_song = PlaylistSong.objects.get(playlist=found_playlist, song__id=song_id)
         p_song.delete()
 
-    context = {'playlist': found_playlist, 'variables': variables, 'songs': songs_ids}
+    context = {'playlist': found_playlist, 'variables': variables, 'songs': songs}
     return render(request, 'MusicApp/playlist_song.html', context=context)
+
+
+def song(request, pk):
+    songs = list(Song.objects.filter(id=pk))
+    variables = getSongsJson(songs)
+
+    context = {'variables': variables, 'song': songs[0], 'songs': songs}
+    return render(request, 'MusicApp/song.html', context=context)
+
+
+def artist(request, pk):
+    songs = list(Song.objects.filter(artist_id=pk))
+    variables = getSongsJson(songs)
+
+    context = {'variables': variables, 'songs': songs}
+    return render(request, 'MusicApp/artist.html', context=context)
+
+
+def genre(request, pk):
+    genre = Genre.objects.filter(id=pk).first()
+    songs = list(Song.objects.filter(genre=genre))
+    variables = getSongsJson(songs)
+
+    context = {'variables': variables, 'genre': genre, 'songs': songs}
+    return render(request, 'MusicApp/genre.html', context=context)

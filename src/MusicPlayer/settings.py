@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'MusicApp.apps.MusicAppConfig',
     'Authentication.apps.AuthenticationConfig',
+    'mathfilters'
 ]
 
 MIDDLEWARE = [

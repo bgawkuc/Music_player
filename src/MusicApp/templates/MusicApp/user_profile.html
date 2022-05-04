@@ -1,14 +1,18 @@
+{% extends 'base.html' %}
+
 {% load static %}
 
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% block page_title %}
+    Music Player
+{% endblock page_title %}
+
+{% block additional_head %}
     <link rel="stylesheet" type='text/css' href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type='text/css' href="{% static 'css/user_profile.css' %}">
     <title>User profile</title>
-</head>
+{% endblock additional_head %}
 
-<body>
-    {% include 'header.html' %}
+{% block body %}
 
     <a href="{% url 'index' %}" class="menu-back"><i class="fa fa-arrow-left"></i></a>
 
@@ -17,7 +21,6 @@
         <a href="{% url 'favourites' %}"><i class="fa fa-heart" aria-hidden="true"></i>FAVOURITES</a>
     </div>
 
-    {% include 'footer.html' %}
-</body>
 
+{% endblock body %}
 
