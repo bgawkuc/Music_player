@@ -8,6 +8,7 @@
 
 {% block additional_head %}
     <link rel="stylesheet" type='text/css' href="{% static 'css/music2.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/search.css' %}">
 {% endblock additional_head %}
 
 {% block body %}
@@ -15,10 +16,10 @@
     {% if  songs or artists or genres or playlists %}
         {% if songs %}
             <div class="song-search">
-                <p>Songs:</p>
+                <p class="title">Songs:</p>
                 {% for song in songs %}
                     <a href="/song/{{ song.id }}">
-                        <div style="margin-left: 50px" class="song-item">
+                        <div class="song-item item">
                             {{ song.title }}
                         </div>
                     </a>
@@ -27,10 +28,10 @@
         {% endif %}
         {% if artists %}
             <div class="artist-search">
-                <p>Artists:</p>
+                <p class="title">Artists:</p>
                 {% for artist in artists %}
                     <a href="/artist/{{ artist.id }}">
-                        <div style="margin-left: 50px" class="artist-item">
+                        <div  class="artist-item item">
                             {{ artist.name }}
                         </div>
                     </a>
@@ -39,10 +40,10 @@
         {% endif %}
         {% if genres %}
             <div class="genre-search">
-                <p>Genres:</p>
+                <p class="title">Genres:</p>
                 {% for genre in genres %}
                     <a href="/genre/{{ genre.id }}">
-                        <div style="margin-left: 50px" class="genre-item">
+                        <div class="genre-item item">
                             {{ genre.name }}
                         </div>
                     </a>
@@ -51,10 +52,10 @@
         {% endif %}
         {% if playlists %}
             <div class="playlist-search">
-                <p>User Playlists:</p>
+                <p class="title">User Playlists:</p>
                 {% for playlist in playlists %}
                     <a href="/user_profile/playlists/{{ playlist.id }}">
-                        <div style="margin-left: 50px" class="playlist-item">
+                        <div class="playlist-item item">
                             {{ playlist.name }} |
                             {{ playlist.owner }}
                         </div>
