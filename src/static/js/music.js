@@ -37,10 +37,7 @@ music.init = function () {
                     $.ajax({
                         type: "POST",
                         url: '/stats/single/',
-                        data: {csrfmiddlewaretoken: csrftoken, text: 'test text'},
-                        success: function callback(response){
-                            console.log(response);
-                        }
+                        data: {csrfmiddlewaretoken: csrftoken, song: Amplitude.getSongsState()[Amplitude.getActiveIndex()].id}
                     })
                 }
             }
