@@ -2,7 +2,17 @@ set_paused = function () {
     document.getElementById("playpause-check").classList.add("paused");
 }
 
-var music = {
+play_song = function (id){
+    Amplitude.playNow(music.songs[id]);
+
+    let player = document.getElementById("player");
+    player.style.opacity = "100%";
+    player.style.height = "200px";
+    player.style.transform = null;
+    player.style.visibility = "visible";
+}
+
+let music = {
     songs: {},
 }
 
@@ -13,14 +23,27 @@ music.init = function () {
     function amplitudeInit() {
         let amplitudeSongs = [];
 
-        for (var i = 0; i < music.songs.length; i++) {
+        for (let i = 0; i < music.songs.length; i++) {
             let song = music.songs[i];
             amplitudeSongs.push(song);
         }
 
         let amplitudeSettings = {
             'songs': amplitudeSongs,
-            'volume': 50
+            'volume': 50,
+            'start_song': null,
+            'callbacks': {
+                loadstart: function (){
+                    $.ajax({
+                        type: "POST",
+                        url: '/stats/single/',
+                        data: {csrfmiddlewaretoken: csrftoken, text: 'test text'},
+                        success: function callback(response){
+                            console.log(response);
+                        }
+                    })
+                }
+            }
         };
 
         for (let key in amplitudeSettings.playlists) {
@@ -48,5 +71,9 @@ next_button.addEventListener("click", set_paused);
 
 let songs_divs = document.getElementsByClassName("amplitude-song-container");
 for (let song of songs_divs) {
+    let id = song.getAttribute("data-amplitude-song-index");
+    song.addEventListener("click",() => {
+        play_song(id);
+    });
     song.addEventListener("click", set_paused);
 }
