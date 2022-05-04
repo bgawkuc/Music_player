@@ -7,7 +7,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("MusicApp.urls")),
-    path('authentication/', include("Authentication.urls"))
+    path('authentication/', include("Authentication.urls")),
+    path('stats/', include("Statistics.urls"))
 ]
 
 urlpatterns += staticfiles_urlpatterns()

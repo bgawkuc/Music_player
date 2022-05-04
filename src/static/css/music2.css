@@ -533,6 +533,7 @@ body {
     /*right: 50px;*/
     /*margin-bottom: -50px;*/
     z-index: 1;
+    transition: 0.3s ease-out;
 }
 
 #songs {
@@ -543,6 +544,7 @@ body {
     justify-content: space-evenly;
     overflow-x: hidden;
     margin-bottom: 50px;
+    transition: 0.2s ease-out;
 }
 
 .player-container {

@@ -3,7 +3,7 @@
 
 <div class="player-container">
 
-    <div id="player">
+    <div id="player" style="height: 0; opacity: 0; transform: translateY(-50px); visibility: hidden;">
 
         <div id="white-player">
             <div class="white-player-top">
@@ -21,7 +21,7 @@
 
                 <div class="time-progress">
                     <div id="progress-container">
-                        <input type="range" class="amplitude-song-slider"/>
+                        <input type="range" class="amplitude-song-slider" step=".1"/>
                         <progress id="song-played-progress" class="amplitude-song-played-progress"></progress>
                         <progress id="song-buffered-progress" class="amplitude-buffered-progress"
                                   value="0"></progress>
@@ -78,7 +78,7 @@
                         <div class="duration">{{ song.length|intdiv:60 }}:
                             {% with minutes=song.length|mod:60 %}
                                 {% if minutes < 10 %}
-                                    {{ minutes|mul:10 }}
+                                    0{{ minutes }}
                                 {% else %}
                                     {{ minutes }}
                                 {% endif %}
