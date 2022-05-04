@@ -1,4 +1,4 @@
-set_paused = function (){
+set_paused = function () {
     document.getElementById("playpause-check").classList.add("paused");
 }
 
@@ -36,7 +36,7 @@ music.init = function () {
 }
 
 let playpause_button = document.getElementById("playpause");
-playpause_button.addEventListener("click",  () => {
+playpause_button.addEventListener("click", () => {
     document.getElementById("playpause-check").classList.toggle("paused");
 })
 
