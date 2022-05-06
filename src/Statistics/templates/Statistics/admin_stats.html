@@ -1,0 +1,23 @@
+{% load static %}
+
+{% block additional_head %}
+    <link rel="stylesheet" type='text/css' href="{% static 'css/music2.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/admin-stats.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock additional_head %}
+<body>
+    {% include 'header.html' %}
+
+    <a href="{% url 'user_profile' %}" class="menu-back"><i class="fa fa-arrow-left"></i></a>
+
+    <div class="container">
+        <a href="{% url 'artists-report' %}">ARTISTS REPORT</a>
+        <a href="{% url 'songs-report' %}">SONGS REPORT</a>
+        <a href="{% url 'genres-report' %}">GENRES REPORT</a>
+        <a href="{% url 'users-report' %}">USERS REPORT</a>
+    </div>
+
+    {% include 'footer.html' %}
+
+</body>

@@ -19,6 +19,11 @@
     <div class="container">
         <a href="{% url 'playlists' %}"><i class="fa fa-music" aria-hidden="true"></i>PLAYLISTS</a>
         <a href="{% url 'favourites' %}"><i class="fa fa-heart" aria-hidden="true"></i>FAVOURITES</a>
+        <a href="{% url 'user-stats' %}"><i class="fa fa-bar-chart" aria-hidden="true"></i>MY STATISTICS</a>
+{#        only user with admin permissions have access to this route#}
+        {% if request.user.is_staff %}
+            <a href="{% url 'admin-stats' %}"><i class="fa fa-bar-chart" aria-hidden="true"></i>ALL STATISTICS</a>
+        {% endif %}
     </div>
 
 

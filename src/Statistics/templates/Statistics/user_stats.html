@@ -1,0 +1,73 @@
+{% load static %}
+
+{% block additional_head %}
+    <link rel="stylesheet" type='text/css' href="{% static 'css/music2.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/user_stats.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock additional_head %}
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <a href="{% url 'user_profile' %}" class="menu-back"><i class="fa fa-arrow-left"></i></a>
+        {% if  fiveBestSongs|length > 0   %}
+
+            <div class="statistic">
+                <p class="title">Your {{ fiveBestSongs | length }} most played songs </p>
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Artist</th>
+                        <th>Number of plays</th>
+                    </tr>
+                    {% for best in fiveBestSongs %}
+                        <tr>
+                            <td>{{ best.0 }}</td>
+                            <td>{{ best.1 }}</td>
+                            <td>{{ best.2 }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="statistic">
+                <p class="title">Your {{ fiveBestArtists | length }} most played artists </p>
+                <table>
+                    <tr>
+                        <th>Artist</th>
+                        <th>Number of plays</th>
+                    </tr>
+                    {% for best in fiveBestArtists %}
+                        <tr>
+                            <td>{{ best.0 }}</td>
+                            <td>{{ best.1 }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="statistic">
+                <p class="title">Your {{ fiveBestGenres | length }} most played genres </p>
+                <table>
+                    <tr>
+                        <th>Genre</th>
+                        <th>Number of plays</th>
+                    </tr>
+                    {% for best in fiveBestGenres %}
+                        <tr>
+                            <td>{{ best.0 }}</td>
+                            <td>{{ best.1 }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+
+        {% else %}
+            <p class="title">You have never played any song</p>
+        {% endif %}
+    </div>
+
+    {% include 'footer.html' %}
+
+</body>

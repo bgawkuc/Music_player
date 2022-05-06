@@ -1,0 +1,38 @@
+.title {
+    text-align: center;
+    color: #21a25b;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.menu-back i {
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+.statistic {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+table {
+    width: 700px;
+    border-collapse: collapse;
+    border-radius: 30px;
+    border-style: hidden;
+    background: white;
+}
+
+td, th {
+    border: 1px #6e6565 solid;
+    text-align: center;
+    height: 30px;
+}
+
+.container {
+    margin-bottom: 100px;
+}
