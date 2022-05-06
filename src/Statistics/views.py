@@ -1,4 +1,6 @@
 import datetime
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import random
@@ -111,9 +113,13 @@ def songsReport(request):
     plt.title('Number of each songs played')
     plt.xlabel('Song ID')
     plt.ylabel('Number of plays')
-    plt.show()
+    # plt.show()
+    plt.savefig("image.jpg", dpi=300)
+    plt.close()
 
+    pdf.image('image.jpg', x=23.5, w=250, h=176)
     pdf.output('songsReport.pdf', 'F')
+    plt.clf()
 
     return FileResponse(open('songsReport.pdf', 'rb'), as_attachment=False, content_type='application/pdf')
 
@@ -130,7 +136,7 @@ def artistsReport(request):
     pdf.cell(297, 10, '', ln=1)
 
     pdf.set_font('courier', 'B', 14)
-    pdf.cell(297, 14, f"{'Artist'.ljust(85)} {'Count'.ljust(50)}",ln=1)
+    pdf.cell(297, 14, f"{'Artist'.ljust(85)} {'Count'.ljust(50)}", ln=1)
     pdf.line(10, 40, 287, 40)
 
     pdf.set_font('courier', '', 12)
@@ -155,11 +161,13 @@ def artistsReport(request):
 
     labels = [f'{l}, {(s/sum(counts) * 100):0.2f}%' for l, s in zip(artists, counts)]
     plt.legend(bbox_to_anchor=(0.7, 0), loc='lower left', labels=labels)
-    plt.show()
+    # plt.show()
+    plt.savefig("image2.jpg", dpi=300)
+    plt.close()
 
-    # jakoś na wątkach to trzeba zrobić, by zapisac wykres do pliku, próbowałam kilka h, ale bez efektów
-
+    pdf.image('image2.jpg', x=-5, w=250, h=176)
     pdf.output('artistsReport.pdf', 'F')
+    plt.clf()
 
     return FileResponse(open('artistsReport.pdf', 'rb'), as_attachment=False, content_type='application/pdf')
 
@@ -186,8 +194,6 @@ def genresReport(request):
         genres.append(genre)
         counts.append(count)
 
-    pdf.output('genresReport.pdf', 'F')
-
     # plot
     maxi = max(counts)
     idx = counts.index(maxi)
@@ -203,7 +209,13 @@ def genresReport(request):
 
     labels = [f'{l}, {(s / sum(counts) * 100):0.2f}%' for l, s in zip(genres, counts)]
     plt.legend(bbox_to_anchor=(0.7, 0), loc='lower left', labels=labels)
-    plt.show()
+    # plt.show()
+
+    plt.savefig("image3.jpg", dpi=300)
+    plt.close()
+    pdf.image('image3.jpg',x=-5, w=250, h=176)
+    plt.clf()
+    pdf.output('genresReport.pdf', 'F')
 
     return FileResponse(open('genresReport.pdf', 'rb'), as_attachment=False, content_type='application/pdf')
 
@@ -231,13 +243,17 @@ def usersReport(request):
         users.append(user)
         counts.append(count)
 
-    pdf.output('usersReport.pdf', 'F')
-
     plt.bar(users, counts, color='#21a25b', width=0.6)
     plt.title('Number of played songs')
     plt.xlabel('User name')
     plt.ylabel('Number')
-    plt.show()
+    # plt.show()
+
+    plt.savefig("image4.jpg", dpi=300)
+    plt.close()
+    pdf.image('image4.jpg', x=23.5, w=250, h=176)
+    plt.clf()
+    pdf.output('usersReport.pdf', 'F')
 
     return FileResponse(open('usersReport.pdf', 'rb'), as_attachment=False, content_type='application/pdf')
 
