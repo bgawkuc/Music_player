@@ -10,10 +10,14 @@
     {% include 'header.html' %}
     <div class="container">
         <a href="{% url 'user_profile' %}" class="menu-back"><i class="fa fa-arrow-left"></i></a>
+        <div class="report-container">
+            <a href="{% url 'my-report' %}" class="report">MY REPORT</a>
+        </div>
+
         {% if  fiveBestSongs|length > 0   %}
 
             <div class="statistic">
-                <p class="title">Your {{ fiveBestSongs | length }} most played songs </p>
+                <p class="title">My {{ fiveBestSongs | length }} most played songs </p>
                 <table>
                     <tr>
                         <th>Title</th>
@@ -31,7 +35,7 @@
             </div>
 
             <div class="statistic">
-                <p class="title">Your {{ fiveBestArtists | length }} most played artists </p>
+                <p class="title">My {{ fiveBestArtists | length }} most played artists </p>
                 <table>
                     <tr>
                         <th>Artist</th>
@@ -47,7 +51,7 @@
             </div>
 
             <div class="statistic">
-                <p class="title">Your {{ fiveBestGenres | length }} most played genres </p>
+                <p class="title">My {{ fiveBestGenres | length }} most played genres </p>
                 <table>
                     <tr>
                         <th>Genre</th>

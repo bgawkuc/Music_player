@@ -11,5 +11,6 @@ urlpatterns = [
     path('songs-report/', views.songsReport, name='songs-report'),
     path('genres-report/', views.genresReport, name='genres-report'),
     path('users-report/', views.usersReport, name='users-report'),
+    path('my-report/', views.myReport, name='my-report'),
 ]
 
