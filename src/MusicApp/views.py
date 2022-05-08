@@ -156,3 +156,7 @@ def genre(request, pk):
 
     context = {'variables': variables, 'genre': genre, 'songs': songs}
     return render(request, 'MusicApp/genre.html', context=context)
+
+
+def songGenerator(request):
+    return render(request, 'MusicApp/song_generator.html', context={})

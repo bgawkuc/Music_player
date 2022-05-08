@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block additional_head %}
+    <link rel="stylesheet" type='text/css' href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/music2.css' %}">
+    <title>Song generator</title>
+{% endblock additional_head %}
+
+{% block body %}
+
+    <a href="{% url 'index' %}" class="menu-back"><i class="fa fa-arrow-left"></i></a>
+
+    Future song-generator here
+
+
+{% endblock body %}
+
