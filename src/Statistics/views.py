@@ -130,7 +130,7 @@ def addContentToMyReport(pdf, data, tableContentData, title, tableTitlesData, xL
     data1, data2, data3, pdf = addToPDF(pdf, data, title, tableTitlesData, tableContentData)
     x = [str(i) for i in range(1, len(data1) + 1)]
 
-    if len(tableTitlesData) == 3:
+    if len(tableTitlesData) == 5:
         createBarPlot(x, data2, title, xLabel, yLabel, id_)
     elif len(tableTitlesData) == 7:
         createBarPlot(x, data3, title, xLabel, yLabel, id_)
