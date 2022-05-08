@@ -34,6 +34,14 @@ body {
     margin-left: 20px;
 }
 
+#container #details #info a {
+    text-decoration: none;
+}
+
+#container #details #info a:hover {
+    font-weight: bold;
+}
+
 #container #details #info #title {
     font-size: 30px;
     font-weight: bolder;
@@ -42,10 +50,12 @@ body {
 #container #details #info #artist {
     margin-top: -30px;
     font-size: 25px;
+    color: #292424;
 }
 
 #container #details #info #genre {
     font-size: 20px;
+    color: black;
 }
 
 #container #details #info #options {

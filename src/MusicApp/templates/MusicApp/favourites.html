@@ -19,7 +19,7 @@
             </a>
             <div class="info">
                 <p id="title">{{ song.title }}</p>
-                <p id="artist">{{ song.artist }}</p>
+                <p id="artist">{{ song.artist.name }}</p>
             </div>
             <form method="post">
                   {% csrf_token %}

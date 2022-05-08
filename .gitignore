@@ -161,3 +161,8 @@ cython_debug/
 
 /res/
 /misc/
+
+# created raports
+*.pdf
+*.jpg
+*.png
