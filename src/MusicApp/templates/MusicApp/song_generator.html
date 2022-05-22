@@ -12,8 +12,19 @@
 {% block body %}
 
     <a href="{% url 'index' %}" class="menu-back"><i class="fa fa-arrow-left"></i></a>
-
-    Future song-generator here
+        User best song
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Value</th>
+            </tr>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.0 }}</td>
+                    <td>{{ result.1 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
 
 
 {% endblock body %}
