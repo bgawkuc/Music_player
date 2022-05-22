@@ -1,6 +1,7 @@
 from itertools import chain
 
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
@@ -62,32 +63,51 @@ def songDetails(request, pk):
     song = Song.objects.get(id=pk)
     is_favourite = Favourite.objects.filter(user=request.user, song=pk).values('is_fav')
     playlists = Playlist.objects.filter(owner=request.user)
+    dict = {}
+    isIn = False
+
+    for el in playlists:
+        p_songs = PlaylistSong.objects.filter(playlist=el).values('song')
+        songs_ids = p_songs.values_list('song', flat=True)
+        songs = list(Song.objects.filter(id__in=songs_ids).distinct())
+        for s in songs:
+            if s.id == song.id:
+                isIn = True
+        dict[el] = isIn
+        isIn = False
 
     if request.method == "POST":
         if 'add-favourite' in request.POST:
             is_fav = True
             query = Favourite(user=request.user, song=song, is_fav=is_fav)
-            print(f'query: {query}')
+            # print(f'query: {query}')
             query.save()
+
         elif 'remove-favourite' in request.POST:
             is_fav = True
             query = Favourite.objects.filter(user=request.user, song=song, is_fav=is_fav)
-            print(f'user: {request.user}')
-            print(f'song: {song.id} - {song}')
-            print(f'query: {query}')
+            # print(f'user: {request.user}')
+            # print(f'song: {song.id} - {song}')
+            # print(f'query: {query}')
             query.delete()
+
         elif 'add-playlist' in request.POST:
             playlist_id = request.POST['add-playlist']
             playlist = Playlist.objects.get(id=playlist_id)
-            print(f'playlist: {playlist.name}')
-            print(f'song: {song.title}')
+            # print(f'playlist: {playlist.name}')
+            # print(f'song: {song.title}')
+            p_song = PlaylistSong(playlist=playlist, song=song)
+            p_song.save()
+            return HttpResponseRedirect('/song_details/' + str(song.id))
 
-            # if not already in playlist
-            if not PlaylistSong.objects.filter(playlist=playlist, song=song):
-                p_song = PlaylistSong(playlist=playlist, song=song)
-                p_song.save()
+        elif 'remove-playlist' in request.POST:
+            playlist_id = request.POST['remove-playlist']
+            playlist = Playlist.objects.get(id=playlist_id)
+            p_song = PlaylistSong.objects.filter(playlist=playlist, song__id=song.id)
+            p_song.delete()
+            return HttpResponseRedirect('/song_details/' + str(song.id))
 
-    context = {'song': song, 'is_favourite': is_favourite, 'playlists': playlists}
+    context = {'song': song, 'is_favourite': is_favourite, 'playlists': playlists, 'dict': dict}
     return render(request, 'MusicApp/song_details.html', context=context)
 
 
@@ -117,7 +137,7 @@ def playlist_song(request, pk):
     found_playlist = Playlist.objects.get(owner=request.user, id=pk)
     p_songs = PlaylistSong.objects.filter(playlist=found_playlist).values('song')
     songs_ids = p_songs.values_list('song', flat=True)
-    songs = list(Song.objects.filter(id__in=songs_ids))
+    songs = list(Song.objects.filter(id__in=songs_ids).distinct())
 
     print(songs_ids, songs)
 
@@ -126,9 +146,11 @@ def playlist_song(request, pk):
     print(variables)
     # song deletion
     if request.method == "POST":
+
         song_id = list(request.POST.keys())[1]
-        p_song = PlaylistSong.objects.get(playlist=found_playlist, song__id=song_id)
+        p_song = PlaylistSong.objects.filter(playlist=found_playlist, song__id=song_id)
         p_song.delete()
+        return HttpResponseRedirect('/user_profile/playlists/' + str(found_playlist.id))
 
     context = {'playlist': found_playlist, 'variables': variables, 'songs': songs}
     return render(request, 'MusicApp/playlist_song.html', context=context)
