@@ -2,7 +2,7 @@ body {
     background-image: linear-gradient(to right bottom, #e7e4e4, #c4c2c2, #a3a1a1, #838181, #646262);
     font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
     line-height: 1.5;
-    min-width: 100vw;
+    min-width: 98vw;
 }
 
 .container {
@@ -25,6 +25,14 @@ body {
     font-size: 30px;
     color: #21a25b;
     font-weight: bold;
+}
+
+.container #password-info {
+    width: 600px;
+    background-color: white;
+    color: #21a25b;
+    font-size: 20px;
+    margin-bottom: -10px;
 }
 
 .container form {
@@ -69,4 +77,8 @@ body {
 
 .container form .signup-btn:hover {
     background-color: #1e7040;
+}
+
+.container {
+    margin-bottom: 100px;
 }
