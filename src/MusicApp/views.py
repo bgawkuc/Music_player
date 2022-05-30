@@ -1,11 +1,10 @@
-from itertools import chain
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-import Statistics.models
+from .bestSong import songGenerator2, findBestSong
 from .forms import PlaylistForm, SearchQueryForm
 from .models import Song, Favourite, Playlist, PlaylistSong, Genre, Artist
 from .player import getSongsJson
@@ -13,6 +12,10 @@ from .player import getSongsJson
 
 def music(request):
     songs = Song.objects.all().order_by('title')
+
+    if request.user.is_authenticated:
+        songs = list(list(zip(*songGenerator2(request.user)))[1])
+        print(songs)
 
     variables = getSongsJson(songs)
     context = {'songs': songs, 'variables': variables}
@@ -183,30 +186,6 @@ def genre(request, pk):
 
 @login_required(login_url='sign_in')
 def songGenerator(request):
-    allListenedSongs = Statistics.models.StatDurationPlay.objects.all()
-    songsObjects, songsTitles, songsTimeUnits = [], [], []
-
-    for listenedSong in allListenedSongs:
-        if listenedSong.user.username == request.user.username:
-            if listenedSong.song.title in songsTitles:
-                idx = songsTitles.index(listenedSong.song.title)
-                songsTimeUnits[idx] += listenedSong.time_units
-            else:
-                songsTitles.append(listenedSong.song.title)
-                songsTimeUnits.append(listenedSong.time_units)
-                songsObjects.append(listenedSong.song)
-
-    allTime = sum(songsTimeUnits)
-    results = [['bpm', 0], ['energy', 0], ['danceability', 0], ['liveness', 0], ['valence', 0], ['acousticness', 0], ['speechiness', 0]]
-
-    for i in range(len(songsObjects)):
-        results[0][1] += (songsObjects[i].details.bpm * songsTimeUnits[i]) / allTime
-        results[1][1] += (songsObjects[i].details.energy * songsTimeUnits[i]) / allTime
-        results[2][1] += (songsObjects[i].details.danceability * songsTimeUnits[i]) / allTime
-        results[3][1] += (songsObjects[i].details.liveness * songsTimeUnits[i]) / allTime
-        results[4][1] += (songsObjects[i].details.valence * songsTimeUnits[i]) / allTime
-        results[5][1] += (songsObjects[i].details.acousticness * songsTimeUnits[i]) / allTime
-        results[6][1] += (songsObjects[i].details.speechiness * songsTimeUnits[i]) / allTime
-    context = {'results': results}
+    context = {'results': findBestSong(request.user)}
 
     return render(request, 'MusicApp/song_generator.html', context=context)

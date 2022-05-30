@@ -18,10 +18,10 @@
                 <th>Category</th>
                 <th>Value</th>
             </tr>
-            {% for result in results %}
+            {% for key, value in results.items %}
                 <tr>
-                    <td>{{ result.0 }}</td>
-                    <td>{{ result.1 }}</td>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
                 </tr>
             {% endfor %}
         </table>
