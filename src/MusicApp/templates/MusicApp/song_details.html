@@ -26,6 +26,7 @@
                 <a href="/genre/{{ song.genre.id }}">
                     <p id="genre">{{ song.genre.name }}</p>
                 </a>
+
                 <div id="options">
 
                     <form method="post">
@@ -34,8 +35,25 @@
                         <select class="playlist-btn" onChange="form.submit();" name="add-playlist">
                             <option selected="selected" disabled style="color: black;" >Add to Playlist</option>
                             {% if playlists %}
-                                {% for playlist in playlists %}
-                                    <option value={{ playlist.id }}>{{ playlist.name }}</option>
+                                {% for playlist, isIn in dict.items %}
+                                    {% if isIn is False %}
+                                        <option value={{ playlist.id }}>{{ playlist.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </form>
+
+                     <form method="post">
+                        {% csrf_token %}
+
+                        <select class="playlist-btn" onChange="form.submit();" name="remove-playlist">
+                            <option selected="selected" disabled style="color: black;" >Remove from Playlist</option>
+                            {% if playlists %}
+                                {% for playlist, isIn in dict.items %}
+                                    {% if isIn is True %}
+                                        <option value={{ playlist.id }}>{{ playlist.name }}</option>
+                                    {% endif %}
                                 {% endfor %}
                             {% endif %}
                         </select>
