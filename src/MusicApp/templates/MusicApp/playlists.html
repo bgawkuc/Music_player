@@ -19,19 +19,23 @@
 
         <div class="playlist-create">
             <input class="playlist-create-input" type="text" name="name">
+            <label>
+                Is private
+                <input type="checkbox" name="is_private" checked>
+            </label>
             <button type="submit" class="playlist-create-btn" name="create-playlist">Create</button>
         </div>
 
     </form>
 
-    {% if playlists %}
+    {% if playlists or followed %}
 
         <div class="playlists">
             <div class="playlist-list">
 
                 {% for playlist in playlists %}
                     <div class="playlist-element">
-                        <a href="{{ playlist.id }}" class="playlist-item">
+                        <a href="/playlists/{{ playlist.id }}" class="playlist-item">
                             <div class="playlist-name">
                                 name:
                                 {{ playlist.name }}
@@ -46,6 +50,47 @@
                             <button type="submit" class="playlist-delete-btn" name="delete-playlist"
                                     value="{{ playlist.id }}">
                                 Delete
+                            </button>
+                        </form>
+                        {% if playlist.is_private %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="playlist-private-btn" name="public-playlist"
+                                        value="{{ playlist.id }}">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        {% else %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="playlist-public-btn" name="private-playlist"
+                                        value="{{ playlist.id }}">
+                                    <i class="fa fa-globe" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+
+                    <br>
+                {% endfor %}
+
+                {% for followed_playlist in followed %}
+                    <div class="playlist-element">
+                        <a href="/playlists/{{ followed_playlist.id }}" class="playlist-item">
+                            <div class="playlist-name">
+                                name:
+                                {{ followed_playlist.name }}
+                            </div>
+                            <div class="playlist-user">
+                                owner:
+                                {{ followed_playlist.owner.username }}
+                            </div>
+                        </a>
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="playlist-unfollow" name="unfollow-playlist"
+                                    value="{{ followed_playlist.id }}">
+                                <i class="fa fa-heart" aria-hidden="true"></i>
                             </button>
                         </form>
                     </div>

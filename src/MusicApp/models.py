@@ -51,6 +51,13 @@ class Playlist(models.Model):
     id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+    is_private = models.BooleanField(default=True)
+
+
+class PlaylistFollow(models.Model):
+    id = models.AutoField(primary_key=True)
+    playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class PlaylistSong(models.Model):

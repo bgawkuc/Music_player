@@ -31,7 +31,7 @@
                 <p class="title">Artists:</p>
                 {% for artist in artists %}
                     <a href="/artist/{{ artist.id }}">
-                        <div  class="artist-item item">
+                        <div class="artist-item item">
                             {{ artist.name }}
                         </div>
                     </a>
@@ -54,12 +54,21 @@
             <div class="playlist-search">
                 <p class="title">User Playlists:</p>
                 {% for playlist in playlists %}
-                    <a href="/user_profile/playlists/{{ playlist.id }}">
+                    <a href="/playlists/{{ playlist.id }}">
                         <div class="playlist-item item">
                             {{ playlist.name }} |
                             {{ playlist.owner }}
                         </div>
                     </a>
+                    {% if playlist.owner != user %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="playlist-follow" name="follow-playlist"
+                                    value="{{ playlist.id }}">
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    {% endif %}
                 {% endfor %}
             </div>
         {% endif %}

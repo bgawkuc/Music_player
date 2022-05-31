@@ -1,13 +1,15 @@
-
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
 from .bestSong import songGenerator2, findBestSong
 from .forms import PlaylistForm, SearchQueryForm
-from .models import Song, Favourite, Playlist, PlaylistSong, Genre, Artist
+from .models import Song, Favourite, Playlist, PlaylistSong, Genre, Artist, PlaylistFollow
 from .player import getSongsJson
+from .playlists import createPlaylist, deletePlaylist, deleteSong, addSong, changePrivacy, followPlaylist, \
+    unfollowPlaylist
 
 
 def music(request):
@@ -22,6 +24,7 @@ def music(request):
     return render(request, 'MusicApp/index.html', context=context)
 
 
+@login_required(login_url='sign_in')
 def search(request):
     songs = []
     artists = []
@@ -37,7 +40,14 @@ def search(request):
                 songs = Song.objects.filter(title__icontains=query)
                 artists = Artist.objects.filter(name__icontains=query)
                 genres = Genre.objects.filter(name__icontains=query)
-                playlists = Playlist.objects.filter(owner=request.user, name__icontains=query)
+                playlists = Playlist.objects.filter(name__icontains=query, is_private=False)
+
+    if request.method == "POST":
+        if 'follow-playlist' in request.POST:
+            p_id = request.POST['follow-playlist']
+            playlist = Playlist.objects.get(id=p_id)
+            followPlaylist(playlist, request.user)
+            return HttpResponseRedirect('/playlists/' + p_id)
 
     context = {'songs': songs, 'artists': artists, 'genres': genres, 'playlists': playlists}
     return render(request, 'MusicApp/search.html', context=context)
@@ -99,15 +109,13 @@ def songDetails(request, pk):
             playlist = Playlist.objects.get(id=playlist_id)
             # print(f'playlist: {playlist.name}')
             # print(f'song: {song.title}')
-            p_song = PlaylistSong(playlist=playlist, song=song)
-            p_song.save()
+            addSong(playlist, song)
             return HttpResponseRedirect('/song_details/' + str(song.id))
 
         elif 'remove-playlist' in request.POST:
             playlist_id = request.POST['remove-playlist']
             playlist = Playlist.objects.get(id=playlist_id)
-            p_song = PlaylistSong.objects.filter(playlist=playlist, song__id=song.id)
-            p_song.delete()
+            deleteSong(playlist, song)
             return HttpResponseRedirect('/song_details/' + str(song.id))
 
     context = {'song': song, 'is_favourite': is_favourite, 'playlists': playlists, 'dict': dict}
@@ -117,27 +125,45 @@ def songDetails(request, pk):
 @login_required(login_url='sign_in')
 def playlists(request):
     playlists = Playlist.objects.filter(owner=request.user)
+    followed = PlaylistFollow.objects.filter(user=request.user).values('playlist')
+    followed_ids = followed.values_list('playlist', flat=True)
+    followed = list(Playlist.objects.filter(id__in=followed_ids).distinct().filter(~Q(owner=request.user)))
+    print(followed)
 
     if request.method == "POST":
         if 'create-playlist' in request.POST:
             form = PlaylistForm(request.POST)
             if form.is_valid():
                 name = form.cleaned_data['name']
-                p = Playlist(name=name, owner=request.user)
-                p.save()
+                is_private = True if form.cleaned_data['is_private'] else False
+                createPlaylist(name, request.user, is_private)
         elif 'delete-playlist' in request.POST:
-            print(request.POST)
             p_id = request.POST['delete-playlist']
-            p = Playlist.objects.get(id=p_id)
-            p.delete()
+            deletePlaylist(p_id)
+        elif 'public-playlist' in request.POST:
+            p_id = request.POST['public-playlist']
+            playlist = Playlist.objects.get(id=p_id)
+            changePrivacy(playlist, False)
+        elif 'private-playlist' in request.POST:
+            p_id = request.POST['private-playlist']
+            playlist = Playlist.objects.get(id=p_id)
+            changePrivacy(playlist, True)
+        elif 'unfollow-playlist' in request.POST:
+            p_id = request.POST['unfollow-playlist']
+            playlist = Playlist.objects.get(id=p_id)
+            unfollowPlaylist(playlist, request.user)
 
-    context = {'playlists': playlists}
+    context = {'playlists': playlists, 'followed': followed}
     return render(request, 'MusicApp/playlists.html', context=context)
 
 
 @login_required(login_url='sign_in')
 def playlist_song(request, pk):
-    found_playlist = Playlist.objects.get(owner=request.user, id=pk)
+    found_playlist = Playlist.objects.get(id=pk)
+
+    if found_playlist.is_private and found_playlist.owner != request.user:
+        return HttpResponseRedirect('/')
+
     p_songs = PlaylistSong.objects.filter(playlist=found_playlist).values('song')
     songs_ids = p_songs.values_list('song', flat=True)
     songs = list(Song.objects.filter(id__in=songs_ids).distinct())
@@ -149,11 +175,10 @@ def playlist_song(request, pk):
     print(variables)
     # song deletion
     if request.method == "POST":
-
         song_id = list(request.POST.keys())[1]
-        p_song = PlaylistSong.objects.filter(playlist=found_playlist, song__id=song_id)
-        p_song.delete()
-        return HttpResponseRedirect('/user_profile/playlists/' + str(found_playlist.id))
+        song = Song.objects.get(id=song_id)
+        deleteSong(found_playlist, song)
+        return HttpResponseRedirect('/playlists/' + str(found_playlist.id))
 
     context = {'playlist': found_playlist, 'variables': variables, 'songs': songs}
     return render(request, 'MusicApp/playlist_song.html', context=context)
