@@ -34,7 +34,7 @@ def findBestSong(user):
     return results
 
 
-def songGenerator2(user):
+def songsGenerator(user):
     allSongs = Song.objects.all()
     results = findBestSong(user)
     bestSongDF = pd.DataFrame([results])

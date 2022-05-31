@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from .bestSong import songGenerator2, findBestSong
+from .bestSong import songsGenerator, findBestSong
 from .forms import PlaylistForm, SearchQueryForm
 from .models import Song, Favourite, Playlist, PlaylistSong, Genre, Artist, PlaylistFollow
 from .player import getSongsJson
@@ -16,7 +16,7 @@ def music(request):
     songs = Song.objects.all().order_by('title')
 
     if request.user.is_authenticated:
-        songs = list(list(zip(*songGenerator2(request.user)))[1])
+        songs = list(list(zip(*songsGenerator(request.user)))[1])
         print(songs)
 
     variables = getSongsJson(songs)

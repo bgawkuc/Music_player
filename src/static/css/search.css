@@ -16,3 +16,7 @@ a {
 .item:hover {
     font-weight: bold;
 }
+
+.playlist-type-btn {
+    margin-left: 100px;
+}

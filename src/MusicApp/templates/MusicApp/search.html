@@ -9,6 +9,7 @@
 {% block additional_head %}
     <link rel="stylesheet" type='text/css' href="{% static 'css/music2.css' %}">
     <link rel="stylesheet" type='text/css' href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/user-playlists.css' %}">
 {% endblock additional_head %}
 
 {% block body %}
@@ -54,21 +55,23 @@
             <div class="playlist-search">
                 <p class="title">User Playlists:</p>
                 {% for playlist in playlists %}
-                    <a href="/playlists/{{ playlist.id }}">
-                        <div class="playlist-item item">
-                            {{ playlist.name }} |
-                            {{ playlist.owner }}
-                        </div>
-                    </a>
-                    {% if playlist.owner != user %}
-                        <form method="post">
-                            {% csrf_token %}
-                            <button type="submit" class="playlist-follow" name="follow-playlist"
-                                    value="{{ playlist.id }}">
-                                <i class="fa fa-heart" aria-hidden="true"></i>
-                            </button>
-                        </form>
-                    {% endif %}
+                    <div class="playlist-follow-info">
+                        <a href="/playlists/{{ playlist.id }}">
+                            <div class="playlist-item item">
+                                {{ playlist.name }} |
+                                {{ playlist.owner }}
+                            </div>
+                        </a>
+                        {% if playlist.owner != user %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="playlist-follow playlist-type-btn" name="follow-playlist"
+                                        value="{{ playlist.id }}">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
                 {% endfor %}
             </div>
         {% endif %}

@@ -8,7 +8,8 @@
 
 
 {% block additional_head %}
-    <link rel="stylesheet" type='text/css' href="{% static 'css/playlists.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'css/user-playlists.css' %}">
+
 {% endblock additional_head %}
 
 {% block body %}
@@ -19,10 +20,10 @@
 
         <div class="playlist-create">
             <input class="playlist-create-input" type="text" name="name">
-            <label>
-                Is private
+            <div class="private-playlist-info">
+                <label class="private-title">PRIVATE</label>
                 <input type="checkbox" name="is_private" checked>
-            </label>
+            </div>
             <button type="submit" class="playlist-create-btn" name="create-playlist">Create</button>
         </div>
 
@@ -55,17 +56,17 @@
                         {% if playlist.is_private %}
                             <form method="post">
                                 {% csrf_token %}
-                                <button type="submit" class="playlist-private-btn" name="public-playlist"
+                                <button type="submit" class="playlist-private-btn playlist-type-btn" name="public-playlist"
                                         value="{{ playlist.id }}">
-                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                    <i class="fa fa-lock playlist-type" aria-hidden="true"></i>
                                 </button>
                             </form>
                         {% else %}
                             <form method="post">
                                 {% csrf_token %}
-                                <button type="submit" class="playlist-public-btn" name="private-playlist"
+                                <button type="submit" class="playlist-public-btn playlist-type-btn" name="private-playlist"
                                         value="{{ playlist.id }}">
-                                    <i class="fa fa-globe" aria-hidden="true"></i>
+                                    <i class="fa fa-globe playlist-type" aria-hidden="true"></i>
                                 </button>
                             </form>
                         {% endif %}
@@ -88,7 +89,7 @@
                         </a>
                         <form method="post">
                             {% csrf_token %}
-                            <button type="submit" class="playlist-unfollow" name="unfollow-playlist"
+                            <button type="submit" class="playlist-unfollow playlist-type-btn" name="unfollow-playlist"
                                     value="{{ followed_playlist.id }}">
                                 <i class="fa fa-heart" aria-hidden="true"></i>
                             </button>
